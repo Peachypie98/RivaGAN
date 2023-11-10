@@ -39,18 +39,13 @@ Lastly, I have conducted testing on Windows 11 using the latest Python 3.11 and 
    After completing the model training, our objective is to encode a data watermark onto a video and subsequently extract it from the encoded footage. After the inference process, it will generate `output_log.txt` file, providing a detailed record of the extracted data from each frame in the video and a watermarked video that contains the data
    
    ```
-<<<<<<< HEAD
    python inference.py --model_weight your_weight_path/model.pt
-   python inference.py --data_dim 64 --model_weight your_weight_path/model.pt --your_data "1100 1001 0011 0000 1111 0101 1100 0011" --fps 30
-=======
-   python inference.py --model_weight 'weight_path/model.pt'
-   python inference.py --data_dim 64 --model_weight weight_path/model.pt --your_data (1,0,1,1)*8 --fps 30
->>>>>>> e20cc7b52d25e12484521f0d3cd56950efca89d4
+   python inference.py --data_dim 64 --model_weight your_weight_path/model.pt --random_data No --your_data "1100 1001 0011 0000 1111 0101 1100 0011" --fps 30
    ```
    Default Hyperparameters Details:    
    * --data_dim: 32 (The data dimensions must correspond with the dimensions used during the model training)
    * --model_weight: None (Must insert)
-   * --random_data: True
-   * --your_data: None (Set `--random_data` to `False` to use your own data)
+   * --random_data: Yes
+   * --your_data: None (Set `--random_data` to `No` to use your own data)
    * --video_location: ./data/hollywood2/val/actioncliptest00002.avi
    * --fps: 25 (Watermaked video fps)
