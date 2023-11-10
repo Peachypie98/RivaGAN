@@ -37,7 +37,7 @@ parser.add_argument('--data_dim', type=int, default=32)
 parser.add_argument('--model_weight', type=str, default=None)
 parser.add_argument('--random_data', type=str, default="Yes")
 parser.add_argument('--your_data', type=str, default=None)
-parser.add_argument('--video_location', type=str, default="./data/hollywood2/val/actioncliptest00013.avi")
+parser.add_argument('--video_location', type=str, default="./data/hollywood2/val/actioncliptest00002.avi")
 parser.add_argument('--fps', type=int, default=25)
 args = parser.parse_args()
 
