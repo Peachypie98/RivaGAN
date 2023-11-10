@@ -33,7 +33,7 @@ warnings.filterwarnings('ignore')
 # Argument Parser                                                                   #
 #####################################################################################
 parser = argparse.ArgumentParser()
-parser.add_argument('--epochs', type=int, default=1) 
+parser.add_argument('--epochs', type=int, default=300) 
 parser.add_argument('--train_batch', type=int, default=12) 
 parser.add_argument('--lr', type=float, default=0.0005)  
 parser.add_argument('--num_workers', type=int, default=16) 

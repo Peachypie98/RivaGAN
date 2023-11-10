@@ -12,7 +12,6 @@ import torch.nn as nn
 import torch_dct as dct
 import random
 import time
-import albumentations as A
 import argparse
 
 from tqdm import tqdm
@@ -36,8 +35,8 @@ warnings.filterwarnings('ignore')
 parser = argparse.ArgumentParser() 
 parser.add_argument('--data_dim', type=int, default=32)
 parser.add_argument('--model_weight', type=str, default=None)
-parser.add_argument('--random_data', type=bool, default=True)
-parser.add_argument('--your_data', type=tuple, default=None)
+parser.add_argument('--random_data', type=str, default="Yes")
+parser.add_argument('--your_data', type=str, default=None)
 parser.add_argument('--video_location', type=str, default="./data/hollywood2/val/actioncliptest00013.avi")
 parser.add_argument('--fps', type=int, default=25)
 args = parser.parse_args()
@@ -738,6 +737,7 @@ if __name__ == "__main__":
     print(f"4. Model Weight: {args.model_weight}")
     print(f"5. Video Location: {args.video_location}")
     print(f"6. Output FPS: {args.fps}")
+    print()
 
     accuracy = []
     model = RivaGAN(data_dim=args.data_dim)
@@ -745,10 +745,12 @@ if __name__ == "__main__":
     print("Model's weight is loaded!")
 
     # Data
-    if args.random_data:
+    if args.random_data == "Yes":
         data = tuple(random.choices([0,1], k=args.data_dim))
     else:
-        data = args.your_data
+        data = args.your_data.replace(" ","")
+        tmp = [int(i) for i in data]
+        data = tuple(tmp)
     print(f"Data: {data[:4]} {data[4:8]} {data[8:12]} {data[12:16]} {data[16:20]} {data[20:24]} {data[24:28]} {data[28:32]}")
     
     # Encode
