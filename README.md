@@ -1,5 +1,4 @@
 # RivaGAN (Unofficial)
-RivaGAN: Robust Invisible Video Watermarking with Attention
 
 ## :hushed: Before We Start...
 This repository is created to assist people encountering difficulties running the offical repository from DAI-Lab, as the official one has not received updates for the past four years.
@@ -23,7 +22,7 @@ Lastly, I have conducted testing on Windows using the latest Python version 3.11
 4. Train RivaGAN Model  
    The hyperparameter settings align with the official specifications and are currently configured to their default values
    ```
-   python train.py → Default
+   python train.py 
    python train.py --epochs 200 --lr 0.001 --data_dim 64 
    ```
    Default Hyperparameters Details: 
@@ -40,13 +39,13 @@ Lastly, I have conducted testing on Windows using the latest Python version 3.11
    After completing the model training, our objective is to encode a data watermark onto a video and subsequently extract it from the encoded footage. After the inference process, it will generate `output_log.txt` file, providing a detailed record of the extracted data from each frame in the video and a watermarked video that contains the data. 
    
    ```
-   python inference.py --model_weight 'weight_path/model.pt' → Default
-   python inference.py --data_dim 64 --model_weight weight_path/model.pt --your_data (1,0,1,1)*8 --fps 30
+   python inference.py --model_weight your_weight_path/model.pt
+   python inference.py --data_dim 64 --model_weight your_weight_path/model.pt --your_data "1100 1001 0011 0000 1111 0101 1100 0011" --fps 30
    ```
    Default Hyperparameters Details:    
    * --data_dim: 32 (The data dimensions must correspond with the dimensions used during the model training)
    * --model_weight: None (Must insert)
    * --random_data: True
    * --your_data: None (Set `--random_data` to `False` to use your own data)
-   * --video_location: ./data/hollywood2/val/actioncliptest00013.avi
+   * --video_location: ./data/hollywood2/val/actioncliptest00002.avi
    * --fps: 25 (Watermaked video fps)
