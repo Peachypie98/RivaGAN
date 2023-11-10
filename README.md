@@ -23,10 +23,10 @@ Lastly, I have conducted testing on Windows using the latest Python version 3.11
 4. Train RivaGAN Model  
    The hyperparameter settings align with the official specifications and are currently configured to their default values
    ```
-   python train.py # Default
-   python train.py --epochs 200 --lr 0.001 --data_dim 64 # Your Settings (Example)
+   python train.py → Default
+   python train.py --epochs 200 --lr 0.001 --data_dim 64 
    ```
-   Hyperparameters Details: 
+   Default Hyperparameters Details: 
    * --epochs: 300
    * --train_batch: 12
    * --lr: 0.0005
@@ -40,12 +40,13 @@ Lastly, I have conducted testing on Windows using the latest Python version 3.11
    After completing the model training, our objective is to encode a data watermark onto a video and subsequently extract it from the encoded footage. After the inference process, it will generate `output_log.txt` file, providing a detailed record of the extracted data from each frame in the video and a watermarked video that contains the data. 
    
    ```
-   python inference.py # Default
-   python inference.py --data_dim 64 --model_weight ./experiments/attention-20231234/model.pt --your_data (1,0,1,1)*8 --fps 30 # Your Settings (Example)
+   python inference.py --model_weight 'weight_path/model.pt' → Default
+   python inference.py --data_dim 64 --model_weight weight_path/model.pt --your_data (1,0,1,1)*8 --fps 30
    ```
-   * --data_dim: 32 (The data dimensions must align with the dimensions used during the model training process)
-   * --model_weight: None
+   Default Hyperparameters Details:    
+   * --data_dim: 32 (The data dimensions must correspond with the dimensions used during the model training)
+   * --model_weight: None (Must insert)
    * --random_data: True
-   * --your_data: None if `--random_data` is True
-   * --video_location: "./data/hollywood2/val/actioncliptest00013.avi"
-   * --fps: 25
+   * --your_data: None (Set `--random_data` to `False` to use your own data)
+   * --video_location: ./data/hollywood2/val/actioncliptest00013.avi
+   * --fps: 25 (Watermaked video fps)
