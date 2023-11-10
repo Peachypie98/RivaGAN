@@ -442,7 +442,7 @@ class VideoDataset(Dataset):
         x = x.permute(3, 0, 1, 2) # [C, T, H, W]
         return x
 
-def load_train_val(seq_len, batch_size, dataset="hollywood2"):
+def load_train_val(seq_len, batch_size, num_workers, dataset="hollywood2"):
     """
     This returns two dataloaders correponding to the train and validation sets. Each
     iterator yields tensors of shape (N, 3, L, H, W) where N is the batch size, L is
@@ -457,7 +457,7 @@ def load_train_val(seq_len, batch_size, dataset="hollywood2"):
         "%s/train" % dataset,
         crop_size=(160, 160),
         seq_len=seq_len,
-    ), shuffle=True, num_workers=16, batch_size=batch_size, pin_memory=True)
+    ), shuffle=True, num_workers=num_workers, batch_size=batch_size, pin_memory=True)
     val = DataLoader(VideoDataset(
         "%s/val" % dataset,
         crop_size=False,
@@ -498,9 +498,10 @@ def make_pair(frames, data_dim, use_bit_inverse=True, multiplicity=1):
     return frames, data
 
 class RivaGAN(object):
-    def __init__(self, model="attention", data_dim=32):
+    def __init__(self, num_workers, model="attention", data_dim=32):
         self.model = model
         self.data_dim = data_dim
+        self.num_workers = num_workers
         self.adversary = Adversary().cuda()
         self.critic = Critic().cuda()
         if model == "attention":
@@ -534,7 +535,7 @@ class RivaGAN(object):
             return frames
 
         # Set up the data and optimizers
-        train, val = load_train_val(seq_len, batch_size, dataset)
+        train, val = load_train_val(seq_len, batch_size, self.num_workers, dataset)
         G_opt = optim.Adam(chain(self.encoder.parameters(), self.decoder.parameters()), lr=lr)
         G_scheduler = optim.lr_scheduler.ReduceLROnPlateau(G_opt)
         D_opt = optim.Adam(chain(self.adversary.parameters(), self.critic.parameters()), lr=lr)
@@ -744,7 +745,7 @@ if __name__ == "__main__":
     print(f"11. Use Bit Inverse: {args.use_bit_inverse}")
     
     accuracy = []
-    model = RivaGAN(data_dim=args.data_dim)
+    model = RivaGAN(data_dim=args.data_dim, num_workers=args.num_workers)
 
     # Train
     model.fit(dataset="./data/hollywood2", epochs=args.epochs, batch_size=args.train_batch, lr=args.lr, 

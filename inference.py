@@ -33,21 +33,13 @@ warnings.filterwarnings('ignore')
 #####################################################################################
 # Argument Parser                                                                   #
 #####################################################################################
-parser = argparse.ArgumentParser()
-parser.add_argument('--epochs', type=int, default=300) 
-parser.add_argument('--train_batch', type=int, default=12) 
-parser.add_argument('--lr', type=float, default=0.0005)  
-parser.add_argument('--num_workers', type=int, default=16) 
+parser = argparse.ArgumentParser() 
 parser.add_argument('--data_dim', type=int, default=32)
-parser.add_argument('--use_critic', type=bool, default=True)
-parser.add_argument('--use_adversary', type=bool, default=True)
-parser.add_argument('--use_bit_inverse', type=bool, default=True)
-parser.add_argument('--use_noise', type=bool, default=True)
 parser.add_argument('--model_weight', type=str, default=None)
 parser.add_argument('--random_data', type=bool, default=True)
-parser.add_argument('--data', type=tuple, default=None)
+parser.add_argument('--your_data', type=tuple, default=None)
+parser.add_argument('--video_location', type=str, default="./data/hollywood2/val/actioncliptest00013.avi")
 parser.add_argument('--fps', type=int, default=25)
-
 args = parser.parse_args()
 
 #####################################################################################
@@ -739,36 +731,29 @@ class RivaGAN(object):
             yield data, end-start
 
 if __name__ == "__main__":
-    print("**** Training Configurations ****")
+    print("**** Inference Configurations ****")
     print(f"1. Model: RivaGAN")
     print(f"2. Device: {device}")
-    print(f"3. Epoch: {args.epochs}")
-    print(f"4. Train Batch Size: {args.train_batch}")
-    print(f"5. Learning Rate: {args.lr}")
-    print(f"6. Number of Workers: {args.num_workers}")
-    print(f"7. Data Dimension: {args.data_dim}")
-    print(f"8. Use Critic: {args.use_critic}")
-    print(f"9. Use Adversary: {args.use_adversary}")
-    print(f"10. Use Noise: {args.use_noise}")
-    print(f"11. Use Bit Inverse: {args.use_bit_inverse}")
-    print(f"12. Model Weight: {args.model_weight}")
-    print(f"13. Output FPS: {args.fps}")
+    print(f"3. Data Dimension: {args.data_dim}")
+    print(f"4. Model Weight: {args.model_weight}")
+    print(f"5. Video Location: {args.video_location}")
+    print(f"6. Output FPS: {args.fps}")
 
     accuracy = []
     model = RivaGAN(data_dim=args.data_dim)
     model = RivaGAN.load(f"{args.model_weight}")
-    print("Model weight is loaded!")
+    print("Model's weight is loaded!")
 
     # Data
     if args.random_data:
         data = tuple(random.choices([0,1], k=args.data_dim))
     else:
-        data = args.data
+        data = args.your_data
     print(f"Data: {data[:4]} {data[4:8]} {data[8:12]} {data[12:16]} {data[16:20]} {data[20:24]} {data[24:28]} {data[28:32]}")
     
     # Encode
     start1 = time.time()
-    measure_encoder_eachframe = model.encode("./data/hollywood2/val/actioncliptest00013.avi", data, f"./inference_output{args.data_dim}.avi", args.fps)
+    measure_encoder_eachframe = model.encode(args.video_location, data, f"./inference_output{args.data_dim}.avi", args.fps)
     end1 = time.time()
 
     # Decode
