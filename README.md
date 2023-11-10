@@ -40,7 +40,7 @@ Lastly, I have conducted testing on Windows 11 using the latest Python 3.11 and 
    
    ```
    python inference.py --model_weight your_weight_path/model.pt
-   python inference.py --data_dim 64 --model_weight your_weight_path/model.pt --random_data No --your_data "1100 1001 0011 0000 1111 0101 1100 0011" --fps 30
+   python inference.py --model_weight your_weight_path/model.pt --random_data No --your_data "1100 1001 0011 0000 1111 0101 1100 0011" --fps 30
    ```
    Default Hyperparameters Details:    
    * --data_dim: 32 (The data dimensions must correspond with the dimensions used during the model training)
