@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 # RivaGAN PyTorch (Unofficial)
-=======
-# RivaGAN PyTorch (Unofficial)
->>>>>>> e20cc7b52d25e12484521f0d3cd56950efca89d4
 
 ## :hushed: Before We Start...
 This repository is created to assist people encountering difficulties running the offical repository from DAI-Lab, as the official one has not received updates for the past several years.
