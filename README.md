@@ -49,3 +49,8 @@ Lastly, I have conducted testing on Windows 11 using the latest Python 3.11 and 
    * --your_data: None (Set `--random_data` to `No` to use your own data)
    * --video_location: ./data/hollywood2/val/actioncliptest00002.avi
    * --fps: 25 (Watermaked video fps)
+
+## Changelog
+### 2023-01-23
+#### Fixed
+* Enhanced code optimization for encoding and decoding processes (3.5 ~ 4x speed increase)
