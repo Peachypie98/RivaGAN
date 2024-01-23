@@ -465,7 +465,6 @@ def load_train_val(seq_len, batch_size, dataset="hollywood2"):
 #########################################################################################
 # Train                                                                                 #
 #########################################################################################
-
 def get_acc(y_true, y_pred):
     assert y_true.size() == y_pred.size()
     return (y_pred >= 0.0).eq(y_true >= 0.5).sum().float().item() / y_pred.numel()
@@ -702,7 +701,8 @@ class RivaGAN(object):
         for _ in tqdm(range(length)):
             start = time.time()
             _, frame = video_in.read()
-            frame = torch.FloatTensor([frame]) / 127.5 - 1.0      # (L, H, W, 3)
+            
+            frame = torch.from_numpy(frame).float().div_(127.5).sub_(1.0).unsqueeze(0) # (L, H, W, 3)
             frame = frame.permute(3, 0, 1, 2).unsqueeze(0).cuda() # (1, 3, L, H, W)
             wm_frame = self.encoder(frame, data)                  # (1, 3, L, H, W)
             wm_frame = torch.clamp(wm_frame, min=-1.0, max=1.0)
@@ -723,7 +723,7 @@ class RivaGAN(object):
             start = time.time()
             _, frame = video_in.read()
 
-            frame = torch.FloatTensor([frame]) / 127.5 - 1.0      # (L, H, W, 3)
+            frame = torch.from_numpy(frame).float().div_(127.5).sub_(1.0).unsqueeze(0)  # (L, H, W, 3)
             frame = frame.permute(3, 0, 1, 2).unsqueeze(0).cuda() # (1, 3, L, H, W) --> decode each frame
             data = self.decoder(frame)[0].detach().cpu().numpy()
             end = time.time()
@@ -782,5 +782,5 @@ if __name__ == "__main__":
     print(f"Inference Time on Full Frame (Decoder Only): {(end-start2):.3f}s")
     print(f"Inference Time on Each Frame (Decoder Only): {sum(measure_decoder_eachframe)/len(measure_decoder_eachframe):.3f}s")
 
-    #Measure Accuracy
+    # Measure Accuracy
     print(f"Average Accuracy Data: {sum(accuracy)/len(accuracy):.2f}")
