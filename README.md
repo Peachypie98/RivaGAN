@@ -51,6 +51,9 @@ Lastly, I have conducted testing on Windows 11 using the latest Python 3.11 and 
    * --fps: 25 (Watermaked video fps)
 
 ## Changelog
+### 2024-04-18
+* Incorporated pre-trained RivaGAN model, which was trained using 32-bit data dimensions
+
 ### 2023-01-23
 #### Fixed
 * Enhanced code optimization for encoding and decoding processes (3.5 ~ 4x speed increase)
