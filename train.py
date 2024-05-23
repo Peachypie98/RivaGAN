@@ -478,18 +478,8 @@ def quantize(frames):
 
 def make_pair(frames, data_dim, use_bit_inverse=True, multiplicity=1):
     # Add multiplicity to further stabilize training.
-    frames = torch.cat([frames] * multiplicity, dim=0).cuda() 
-    if random.random() > 0.5:
-        mylist = ["0", "1"]
-        data = torch.zeros((frames.size(0)-1, data_dim)).random_(0, 2)
-        if random.choice(mylist) == "0":
-            data2 = torch.zeros((1, data_dim))
-            data = torch.concat((data,data2), dim=0).cuda()
-        else:   
-            data2 = torch.ones((1, data_dim))
-            data = torch.concat((data,data2), dim=0).cuda()
-    else:
-        data = torch.zeros((frames.size(0), data_dim)).random_(0, 2).cuda()
+    frames = torch.cat([frames] * multiplicity, dim=0).cuda()
+    data = torch.zeros((frames.size(0), data_dim)).random_(0, 2).cuda()
 
     # Add the bit-inverse to stabilize training.
     if use_bit_inverse:
