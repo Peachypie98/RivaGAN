@@ -2,7 +2,7 @@
 
 ## :hushed: Before We Start...
 This repository is created to assist people encountering difficulties running the offical repository from DAI-Lab, as the official one has not received updates for the past several years.
-Furthermore, I have implemented several modifications to the official version to ensure successful code execution, along with making specific adjustments to enhance overall performance.
+Additionally, I have optimized the official version to enhance execution speed while maintaining overall performance integrity.
 Lastly, I have conducted testing on Windows 11 using the latest Python 3.11 and PyTorch 2.0.1
 
 ## :grinning: Prerequisites
@@ -43,17 +43,23 @@ Lastly, I have conducted testing on Windows 11 using the latest Python 3.11 and 
    python inference.py --model_weight your_weight_path/model.pt --random_data No --your_data "1100 1001 0011 0000 1111 0101 1100 0011" --fps 30
    ```
    Default Hyperparameters Details:    
-   * --data_dim: 32 (The data dimensions must correspond with the dimensions used during the model training)
-   * --model_weight: None (Must insert)
+   * --data_dim: 32 
+      * The data dimensions must correspond with the dimensions used during the model training
+   * --model_weight: `None` 
+     * Must be added
    * --random_data: Yes
-   * --your_data: None (Set `--random_data` to `No` to use your own data)
-   * --video_location: ./data/hollywood2/val/actioncliptest00002.avi
-   * --fps: 25 (Watermaked video fps)
+   * --your_data: `None` 
+     * Set `--random_data` to `No` to use your own data
+   * --video_location: `./data/hollywood2/val/actioncliptest00002.avi`
+   * --fps: 25 
+      * Watermaked video output FPS
 
 ## Changelog
+### 2024-05-23
+* `make_pair` function has been reverted to its original code due to instability issues during training
+
 ### 2024-04-18
 * Incorporated pre-trained RivaGAN model, which was trained using 32-bit data dimensions
 
 ### 2023-01-23
-#### Fixed
 * Enhanced code optimization for encoding and decoding processes (3.5 ~ 4x speed increase)
